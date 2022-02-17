@@ -24,7 +24,7 @@ const RestaurantCard = ({ restaurant = {} }) => {
 		photos = [
 			'https://www.foodiesfeed.com/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made-600x899.jpg'
 		],
-		address = 'Sec-1, Vikas Nagar',
+		vicinity = 'Sec-1, Vikas Nagar',
 		isOpenNow = true,
 		rating = 4,
 		isClosedTemporarily = true
@@ -37,7 +37,7 @@ const RestaurantCard = ({ restaurant = {} }) => {
 			<CardCover source={{ uri: photos[0] }} />
 			<InfoContainer>
 				<Name>{name}</Name>
-				<Address>{address}</Address>
+				<Address>{vicinity}</Address>
 				<RatingStatusContainer>
 					<Ratings>{ratingsArr.map((_, i) => <SvgXml key={i} xml={star} width={20} height={20} />)}</Ratings>
 					<Status>

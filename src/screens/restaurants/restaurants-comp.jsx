@@ -1,25 +1,34 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FlatList } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 
-import { Container, SearchBarContainer, RestaurantsList } from './restaurants-styles';
+import { SearchBarContainer, RestaurantsList, LoadingSpinner } from './restaurants-styles';
+import SafeAreaContainer from '../../components/utilities/SafeAreaContainer-comp';
 
 import RestaurantCard from '../../components/restaurantCard/restaurantCard-comp';
 
+import { RestaurantsContext } from '../../services/restaurants/restaurants-context';
+
 const Restaurants = () => {
+	const { restaurants, isLoading, error } = useContext(RestaurantsContext);
+
+	if (error) console.log(error);
+
+	if (isLoading) return <LoadingSpinner size="large" color="#5282BD" />;
+
 	return (
-		<Container>
+		<SafeAreaContainer>
 			<SearchBarContainer>
 				<Searchbar placeholder="Search" />
 			</SearchBarContainer>
 			<RestaurantsList>
 				<FlatList
-					data={[ { name: 1 }, { name: 2 }, { name: 3 }, { name: 4 }, { name: 5 }, { name: 6 } ]}
-					renderItem={() => <RestaurantCard />}
+					data={restaurants}
+					renderItem={({ item }) => <RestaurantCard restaurant={item} />}
 					keyExtractor={item => item.name}
 				/>
 			</RestaurantsList>
-		</Container>
+		</SafeAreaContainer>
 	);
 };
 

@@ -12,6 +12,7 @@ import Restaurants from './src/screens/restaurants/restaurants-comp';
 import SafeAreaContainer from './src/components/utilities/SafeAreaContainer-comp';
 
 import { theme } from './src/infrastructure/theme';
+import { LocationContextProvider } from './src/services/location/location-context';
 import { RestaurantContextProvider } from './src/services/restaurants/restaurants-context';
 
 // dummy placeholder components
@@ -56,13 +57,15 @@ function App() {
 	return (
 		<NavigationContainer>
 			<ThemeProvider theme={theme}>
-				<RestaurantContextProvider>
-					<Tab.Navigator screenOptions={screenOptions}>
-						<Tab.Screen name="Restaurants" component={Restaurants} />
-						<Tab.Screen name="Map" component={Map} />
-						<Tab.Screen name="Settings" component={Settings} />
-					</Tab.Navigator>
-				</RestaurantContextProvider>
+				<LocationContextProvider>
+					<RestaurantContextProvider>
+						<Tab.Navigator screenOptions={screenOptions}>
+							<Tab.Screen name="Restaurants" component={Restaurants} />
+							<Tab.Screen name="Map" component={Map} />
+							<Tab.Screen name="Settings" component={Settings} />
+						</Tab.Navigator>
+					</RestaurantContextProvider>
+				</LocationContextProvider>
 			</ThemeProvider>
 			<ExpoStatusBar style="auto" />
 		</NavigationContainer>

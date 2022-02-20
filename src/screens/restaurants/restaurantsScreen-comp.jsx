@@ -1,20 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { FlatList, Text, Pressable } from 'react-native';
-import { Searchbar } from 'react-native-paper';
 
-import { SearchBarContainer, RestaurantsList, LoadingSpinner } from './restaurantsScreen-styles';
+import { RestaurantsList, LoadingSpinner } from './restaurantsScreen-styles';
 import SafeAreaContainer from '../../components/utilities/SafeAreaContainer-comp';
 
+import Search from '../../components/search/search-comp';
 import RestaurantCard from '../../components/restaurantCard/restaurantCard-comp';
 
 import { LocationContext } from '../../services/location/location-context';
 import { RestaurantsContext } from '../../services/restaurants/restaurants-context';
 
 const RestaurantsScreen = ({ navigation }) => {
-	const [ searchText, setSearchText ] = useState('');
-	const [ searchTerm, setSearchTerm ] = useState('San Francisco'); // default value, so that restaurants are shown when app opens for first time
-	const { search } = useContext(LocationContext);
+	const { searchKeyword, search } = useContext(LocationContext);
 	const { restaurants, isLoading, error } = useContext(RestaurantsContext);
+	const [ searchTerm, setSearchTerm ] = useState(searchKeyword);
 
 	useEffect(
 		() => {
@@ -27,14 +26,7 @@ const RestaurantsScreen = ({ navigation }) => {
 
 	return (
 		<SafeAreaContainer>
-			<SearchBarContainer>
-				<Searchbar
-					placeholder="Search"
-					value={searchText}
-					onChangeText={query => setSearchText(query)}
-					onSubmitEditing={() => setSearchTerm(searchText)}
-				/>
-			</SearchBarContainer>
+			<Search searchTermSetter={setSearchTerm} />
 			<RestaurantsList>
 				{error ? (
 					<Text>{error}</Text>

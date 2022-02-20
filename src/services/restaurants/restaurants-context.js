@@ -20,6 +20,7 @@ export const RestaurantContextProvider = ({ children }) => {
 					try {
 						// if location coordinates are received
 						if (location && location.lat && location.lng) {
+							setError(null); // resets the error
 							const { lat, lng } = location;
 							const data = await requestRestaurants(`${lat},${lng}`);
 							const transformedData = transformRestaurantsData(data);

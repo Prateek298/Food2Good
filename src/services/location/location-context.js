@@ -8,6 +8,7 @@ export const LocationContextProvider = ({ children }) => {
 	const [ location, setLocation ] = useState(null);
 	// const [ isLoading, setIsLoading ] = useState(false); -- currently not required
 	const [ error, setError ] = useState(null);
+	const [ searchKeyword, setSearchKeyword ] = useState('San Francisco');
 
 	const getLocation = async searchTerm => {
 		try {
@@ -15,6 +16,7 @@ export const LocationContextProvider = ({ children }) => {
 			if (!searchTerm.length) return;
 
 			// setIsLoading(true);
+			setSearchKeyword(searchTerm);
 			const data = await requestLocations(searchTerm.toLowerCase());
 			const transformedData = transformLocationsData(data);
 			setLocation(transformedData);
@@ -28,6 +30,8 @@ export const LocationContextProvider = ({ children }) => {
 	};
 
 	return (
-		<LocationContext.Provider value={{ location, error, search: getLocation }}>{children}</LocationContext.Provider>
+		<LocationContext.Provider value={{ location, error, searchKeyword, search: getLocation }}>
+			{children}
+		</LocationContext.Provider>
 	);
 };

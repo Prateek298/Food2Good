@@ -5,16 +5,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
 import RestaurantsNavigator from './restaurants-navigator';
+import MapScreen from '../../screens/map/mapScreen-comp';
 
 import SafeAreaContainer from '../../components/utilities/SafeAreaContainer-comp';
 
-// dummy placeholder components
-const Map = () => (
-	<SafeAreaContainer>
-		<Text>Map Screen</Text>
-	</SafeAreaContainer>
-);
-
+// dummy placeholder component
 const Settings = () => (
 	<SafeAreaContainer>
 		<Text>Settings Screen</Text>
@@ -43,7 +38,7 @@ const AppNavigator = () => (
 	<NavigationContainer>
 		<Tab.Navigator screenOptions={screenOptions}>
 			<Tab.Screen name="Restaurants" component={RestaurantsNavigator} />
-			<Tab.Screen name="Map" component={Map} />
+			<Tab.Screen name="Map" component={MapScreen} />
 			<Tab.Screen name="Settings" component={Settings} />
 		</Tab.Navigator>
 	</NavigationContainer>

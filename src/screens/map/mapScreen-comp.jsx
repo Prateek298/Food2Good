@@ -4,7 +4,7 @@ import { Marker, Callout } from 'react-native-maps';
 import { SearchContainer, Map } from './mapScreen-styles';
 
 import Search from '../../components/search/search-comp';
-import MapMarkerCallout from '../../components/mapMarkerCallout/mapMarkerCallout-comp';
+import CompactRestaurantCard from '../../components/compactRestaurantCard/compactRestaurantCard-comp';
 
 import { LocationContext } from '../../services/location/location-context';
 import { RestaurantsContext } from '../../services/restaurants/restaurants-context';
@@ -47,7 +47,7 @@ const MapScreen = ({ navigation }) => {
                         longitude: restaurant.geometry.location.lng
                     }}>
                         <Callout onPress={() => navigation.navigate("RestaurantDetails", { restaurant })}>
-                            <MapMarkerCallout restaurant={restaurant} />
+                            <CompactRestaurantCard isMapCallout restaurant={restaurant} />
                         </Callout>
                     </Marker>
                 ))}

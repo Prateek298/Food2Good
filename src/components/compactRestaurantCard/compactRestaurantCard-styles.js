@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components/native';
 import { WebView } from 'react-native-webview';
 
-export const CalloutContainer = styled.View`
+export const CompactContainer = styled.View`
 	max-width: 130px;
 	align-items: center;
 	padding: ${props => props.theme.space[2]};
@@ -18,4 +18,9 @@ export const ImageNative = styled.Image`${imageStyles};`;
 
 export const ImageWebView = styled(WebView)`
 	${imageStyles};
+`;
+
+export const Name = styled.Text`
+	font-family: ${props => props.theme.fonts.heading};
+	margin: ${props => props.theme.space[2]} 0;
 `;

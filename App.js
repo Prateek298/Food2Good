@@ -4,9 +4,10 @@ import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
 import { useFonts as useOswald, Oswald_400Regular } from '@expo-google-fonts/oswald';
 import { useFonts as useLato, Lato_400Regular } from '@expo-google-fonts/lato';
 
-import AppNavigator from './src/infrastructure/navigation/app-navigator';
+import Navigation from './src/infrastructure/navigation';
 
 import { theme } from './src/infrastructure/theme';
+import { AuthContextProvider } from './src/services/firebase/auth/auth-context';
 import { LocationContextProvider } from './src/services/location/location-context';
 import { RestaurantContextProvider } from './src/services/restaurants/restaurants-context';
 import { FavouritesContextProvider } from './src/services/favourites/favourites-context';
@@ -22,13 +23,15 @@ function App() {
 	return (
 		<>
 			<ThemeProvider theme={theme}>
-				<FavouritesContextProvider>
-					<LocationContextProvider>
-						<RestaurantContextProvider>
-							<AppNavigator />
-						</RestaurantContextProvider>
-					</LocationContextProvider>
-				</FavouritesContextProvider>
+				<AuthContextProvider>
+					<FavouritesContextProvider>
+						<LocationContextProvider>
+							<RestaurantContextProvider>
+								<Navigation />
+							</RestaurantContextProvider>
+						</LocationContextProvider>
+					</FavouritesContextProvider>
+				</AuthContextProvider>
 			</ThemeProvider>
 			<ExpoStatusBar style="auto" />
 		</>

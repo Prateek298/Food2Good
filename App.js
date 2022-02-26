@@ -7,10 +7,8 @@ import { useFonts as useLato, Lato_400Regular } from '@expo-google-fonts/lato';
 import Navigation from './src/infrastructure/navigation';
 
 import { theme } from './src/infrastructure/theme';
+
 import { AuthContextProvider } from './src/services/firebase/auth/auth-context';
-import { LocationContextProvider } from './src/services/location/location-context';
-import { RestaurantContextProvider } from './src/services/restaurants/restaurants-context';
-import { FavouritesContextProvider } from './src/services/favourites/favourites-context';
 
 function App() {
 	const [ oswaldLoaded ] = useOswald({ Oswald_400Regular });
@@ -24,13 +22,7 @@ function App() {
 		<>
 			<ThemeProvider theme={theme}>
 				<AuthContextProvider>
-					<FavouritesContextProvider>
-						<LocationContextProvider>
-							<RestaurantContextProvider>
-								<Navigation />
-							</RestaurantContextProvider>
-						</LocationContextProvider>
-					</FavouritesContextProvider>
+					<Navigation />
 				</AuthContextProvider>
 			</ThemeProvider>
 			<ExpoStatusBar style="auto" />

@@ -49,3 +49,10 @@ export const StyledTextInput = styled(TextInput)`
 	width: 100%;
 	margin-bottom: ${props => (props.mb ? props.theme.space[3] : 0)};
 `;
+
+export const ErrorText = styled.Text`
+	color: ${props => props.theme.colors.text.error};
+	font-size: ${props => props.theme.fontSizes.body};
+	margin-bottom: ${props => props.theme.space[3]};
+	text-align: center;
+`;

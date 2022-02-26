@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { ActivityIndicator } from 'react-native';
 
-import { BackgroundCover, ContentContainer, StyledTextInput, StyledButton } from './accountScreen-styles';
+import { BackgroundCover, ContentContainer, StyledTextInput, StyledButton, ErrorText } from './accountScreen-styles';
+
+import { AuthContext } from '../../services/firebase/auth/auth-context';
 
 const LoginScreen = () => {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
+	const { onLogin, isLoading, error, removeError } = useContext(AuthContext);
+
+	useEffect(removeError, []);
 
 	return (
 		<BackgroundCover>
@@ -27,9 +33,14 @@ const LoginScreen = () => {
 					autoCapitalize="none"
 					secureTextEntry
 				/>
-				<StyledButton icon="lock-open-outline" mode="contained">
-					Login
-				</StyledButton>
+				{error && <ErrorText>{error}</ErrorText>}
+				{isLoading ? (
+					<ActivityIndicator size="small" color="purple" />
+				) : (
+					<StyledButton icon="lock-open-outline" mode="contained" onPress={() => onLogin(email, password)}>
+						Login
+					</StyledButton>
+				)}
 			</ContentContainer>
 		</BackgroundCover>
 	);

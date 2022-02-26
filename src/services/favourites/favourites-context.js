@@ -1,10 +1,13 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { AuthContext } from '../firebase/auth/auth-context';
 
 export const FavouritesContext = createContext();
 
 export const FavouritesContextProvider = ({ children }) => {
 	const [ favourites, setFavourites ] = useState([]);
+	const { user } = useContext(AuthContext);
 
 	const add = restaurant => setFavourites([ ...favourites, restaurant ]);
 
@@ -16,7 +19,7 @@ export const FavouritesContextProvider = ({ children }) => {
 	useEffect(() => {
 		const loadFavourites = async () => {
 			try {
-				const faves = await AsyncStorage.getItem('favourites');
+				const faves = await AsyncStorage.getItem(`favourites-${user.uid}`);
 				if (faves !== null) setFavourites(JSON.parse(faves));
 			} catch (e) {
 				console.log('loading favourites error', e);
@@ -30,7 +33,8 @@ export const FavouritesContextProvider = ({ children }) => {
 			const saveFavourites = async () => {
 				try {
 					const jsonValue = JSON.stringify(favourites);
-					await AsyncStorage.setItem('favourites', jsonValue);
+					// saving unique favourites for different users
+					await AsyncStorage.setItem(`favourites-${user.uid}`, jsonValue);
 				} catch (e) {
 					console.log('Saving favourites error', e);
 				}

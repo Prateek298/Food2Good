@@ -56,3 +56,10 @@ export const ErrorText = styled.Text`
 	margin-bottom: ${props => props.theme.space[3]};
 	text-align: center;
 `;
+
+export const AnimationContainer = styled.View`
+	width: 100%;
+	height: 40%;
+	position: absolute;
+	top: 40px;
+`;

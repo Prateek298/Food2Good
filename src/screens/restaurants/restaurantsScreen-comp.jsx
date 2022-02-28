@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { FlatList, Pressable, Text } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 
-import { RestaurantsList, ToggleFavourites, ToggleText, LoadingSpinner } from './restaurantsScreen-styles';
+import { ListContainer, ToggleFavourites, ToggleText, LoadingSpinner } from './restaurantsScreen-styles';
 import SafeAreaContainer from '../../components/utilities/SafeAreaContainer-comp';
 
 import Search from '../../components/search/search-comp';
 import FavouritesBar from '../../components/favouritesBar/favouritesBar-comp';
-import RestaurantCard from '../../components/restaurantCard/restaurantCard-comp';
+import RestaurantsList from '../../components/restaurantsList/restaurantsList-comp';
 
 import { LocationContext } from '../../services/location/location-context';
 import { RestaurantsContext } from '../../services/restaurants/restaurants-context';
@@ -38,21 +37,9 @@ const RestaurantsScreen = ({ navigation }) => {
 				/>
 			</ToggleFavourites>
 			<FavouritesBar hidden={!showFavourites} onNavigate={navigation.navigate} />
-			<RestaurantsList>
-				{error ? (
-					<Text>{error}</Text>
-				) : (
-					<FlatList
-						data={restaurants}
-						renderItem={({ item }) => (
-							<Pressable onPress={() => navigation.navigate('RestaurantDetails', { restaurant: item })}>
-								<RestaurantCard restaurant={item} />
-							</Pressable>
-						)}
-						keyExtractor={item => item.name}
-					/>
-				)}
-			</RestaurantsList>
+			<ListContainer>
+				<RestaurantsList restaurants={restaurants} error={error} onNavigate={navigation.navigate} />
+			</ListContainer>
 		</SafeAreaContainer>
 	);
 };

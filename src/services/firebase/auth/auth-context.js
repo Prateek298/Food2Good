@@ -1,10 +1,11 @@
 import React, { useState, createContext } from 'react';
 import {
 	getAuth,
+	onAuthStateChanged,
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 	signOut,
-	onAuthStateChanged
+	updateProfile
 } from 'firebase/auth';
 
 import { app } from '../config';
@@ -62,6 +63,18 @@ export const AuthContextProvider = ({ children }) => {
 		}
 	};
 
+	const onUpdateProfile = async profileInfo => {
+		try {
+			setIsLoading(true);
+			await updateProfile(auth.currentUser, { ...profileInfo });
+			setIsLoading(false);
+		} catch (e) {
+			console.log('Profile update error', e);
+			setError(e);
+			setIsLoading(false);
+		}
+	};
+
 	const onSignOut = async () => {
 		try {
 			setIsLoading(true);
@@ -76,7 +89,17 @@ export const AuthContextProvider = ({ children }) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ user, isAuthenticated: !!user, isLoading, error, onRegister, onLogin, onSignOut, removeError }}
+			value={{
+				user,
+				isAuthenticated: !!user,
+				isLoading,
+				error,
+				onRegister,
+				onLogin,
+				onSignOut,
+				onUpdateProfile,
+				removeError
+			}}
 		>
 			{children}
 		</AuthContext.Provider>

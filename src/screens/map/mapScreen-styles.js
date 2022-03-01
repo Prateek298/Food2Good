@@ -12,3 +12,9 @@ export const Map = styled(MapView)`
     height: 100%;
     width: 100%;
 `;
+
+export const ErrorMsg = styled.Text`
+	position: absolute;
+	top: 130px;
+	left: 20px;
+`;

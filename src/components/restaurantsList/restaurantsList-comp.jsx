@@ -2,6 +2,7 @@ import React from 'react';
 import { FlatList, Pressable, Text } from 'react-native';
 
 import RestaurantCard from '../restaurantCard/restaurantCard-comp';
+import FadeInView from '../animations/fade';
 
 const RestaurantsList = ({ restaurants, error, onNavigate }) => {
 	if (error) return <Text>{error}</Text>;
@@ -10,9 +11,11 @@ const RestaurantsList = ({ restaurants, error, onNavigate }) => {
 		<FlatList
 			data={restaurants}
 			renderItem={({ item }) => (
-				<Pressable onPress={() => onNavigate('RestaurantDetails', { restaurant: item })}>
-					<RestaurantCard restaurant={item} />
-				</Pressable>
+				<FadeInView duration={1000}>
+					<Pressable onPress={() => onNavigate('RestaurantDetails', { restaurant: item })}>
+						<RestaurantCard restaurant={item} />
+					</Pressable>
+				</FadeInView>
 			)}
 			keyExtractor={item => item.name}
 		/>

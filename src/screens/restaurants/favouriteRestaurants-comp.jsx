@@ -4,10 +4,10 @@ import { ListContainer } from './restaurantsScreen-styles';
 
 import RestaurantsList from '../../components/restaurantsList/restaurantsList-comp';
 
-import { FavouritesContext } from '../../services/favourites/favourites-context';
+import { UserSavesContext } from '../../services/userSaves/userSaves-context';
 
 const FavouriteRestaurants = ({ navigation }) => {
-	const { favourites } = useContext(FavouritesContext);
+	const { favourites } = useContext(UserSavesContext);
 
 	return (
 		<ListContainer>

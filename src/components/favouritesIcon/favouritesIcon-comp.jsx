@@ -3,10 +3,10 @@ import { AntDesign } from '@expo/vector-icons';
 
 import { FavouritesButton } from './favouritesIcon-styles';
 
-import { FavouritesContext } from '../../services/favourites/favourites-context';
+import { UserSavesContext } from '../../services/userSaves/userSaves-context';
 
 const FavouritesIcon = ({ restaurant }) => {
-	const { favourites, addToFavourites, removeFromFavourites } = useContext(FavouritesContext);
+	const { favourites, addToFavourites, removeFromFavourites } = useContext(UserSavesContext);
 
 	const isFavourite = favourites.find(r => r.placeId === restaurant.placeId);
 

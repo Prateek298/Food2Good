@@ -6,10 +6,10 @@ import { FavouritesContainer } from './favouritesBar-styles';
 import CompactRestaurantCard from '../compactRestaurantCard/compactRestaurantCard-comp';
 import FadeInView from '../animations/fade';
 
-import { FavouritesContext } from '../../services/favourites/favourites-context';
+import { UserSavesContext } from '../../services/userSaves/userSaves-context';
 
 const FavouritesBar = ({ onNavigate, hidden }) => {
-	const { favourites } = useContext(FavouritesContext);
+	const { favourites } = useContext(UserSavesContext);
 
 	if (hidden) return null;
 

@@ -6,7 +6,7 @@ import RestaurantsNavigator from './restaurants-navigator';
 import MapScreen from '../../screens/map/mapScreen-comp';
 import SettingsNavigator from './settings-navigator';
 
-import { FavouritesContextProvider } from '../../services/favourites/favourites-context';
+import { UserSavesContextProvider } from '../../services/userSaves/userSaves-context';
 import { LocationContextProvider } from '../../services/location/location-context';
 import { RestaurantContextProvider } from '../../services/restaurants/restaurants-context';
 
@@ -29,7 +29,7 @@ const screenOptions = ({ route }) => ({
 });
 
 const AppNavigator = () => (
-	<FavouritesContextProvider>
+	<UserSavesContextProvider>
 		<LocationContextProvider>
 			<RestaurantContextProvider>
 				<Tab.Navigator screenOptions={screenOptions}>
@@ -39,7 +39,7 @@ const AppNavigator = () => (
 				</Tab.Navigator>
 			</RestaurantContextProvider>
 		</LocationContextProvider>
-	</FavouritesContextProvider>
+	</UserSavesContextProvider>
 );
 
 export default AppNavigator;

@@ -1,39 +1,37 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
-import { List, Card, Button } from 'react-native-paper';
+import { ScrollView } from 'react-native';
+import { List, Button } from 'react-native-paper';
+
+import { AddBtn } from './profileScreen-styles';
 
 import PropertyEditor from '../../components/propertyEditor/propertyEditor-comp';
+import AddressCard from '../../components/addressCard/addressCard-comp';
 
 import { AuthContext } from '../../services/firebase/auth/auth-context';
+import { UserSavesContext } from '../../services/userSaves/userSaves-context';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
 	const { user, onUpdateProfile } = useContext(AuthContext);
+	const { addresses } = useContext(UserSavesContext);
 	const [ name, setName ] = useState(user.displayName);
 	const [ phone, setPhone ] = useState(user.phoneNumber);
 
 	useEffect(() => onUpdateProfile({ displayName: name }), [ name ]);
 
 	return (
-		<View>
+		<ScrollView>
 			<List.Section title="Personal Information">
 				<PropertyEditor property="Email" defaultValue={user.email} readOnly divider />
 				<PropertyEditor property="Name" defaultValue={name} setter={setName} divider />
 				<PropertyEditor property="Phone" defaultValue={phone} setter={setPhone} divider />
 			</List.Section>
 			<List.Section title="Delivery Address">
-				<Card>
-					<Card.Content>
-						<Text>345A</Text>
-						<Text>East Beach</Text>
-						<Text>Santa Maria</Text>
-						<Text>San Andreas</Text>
-					</Card.Content>
-				</Card>
-				<Button icon="plus" mode="text" color="#000">
-					Add
-				</Button>
+				{addresses.map((address, i) => (
+					<AddressCard key={i} address={address} onNavigate={navigation.navigate} />
+				))}
+				<AddBtn onPress={() => navigation.navigate('Add Address', { address: {} })}>Add More</AddBtn>
 			</List.Section>
-		</View>
+		</ScrollView>
 	);
 };
 

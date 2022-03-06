@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState } from 'react';
 
 import { requestLocations, transformLocationsData } from './location-service';
 
@@ -17,15 +17,19 @@ export const LocationContextProvider = ({ children }) => {
 
 			// setIsLoading(true);
 			setSearchKeyword(searchTerm);
-			const data = await requestLocations(searchTerm.toLowerCase());
-			const transformedData = transformLocationsData(data);
-			setLocation(transformedData);
+			const res = await requestLocations(searchTerm.toLowerCase());
+			if (res.wasSuccess) {
+				const transformedData = transformLocationsData(res.data);
+				setLocation(transformedData);
+			}
+			else {
+				// if no location coordinates are found corresponding to searchTerm
+				setError(res.error);
+				setLocation(null);
+			}
 			// setIsLoading(false);
 		} catch (e) {
-			// if no location coordinates are found corresponding to searchTerm
-			setError(e);
-			setLocation(null);
-			// setIsLoading(false);
+			console.log(e);
 		}
 	};
 

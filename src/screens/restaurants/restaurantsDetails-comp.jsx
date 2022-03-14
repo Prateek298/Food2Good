@@ -5,6 +5,9 @@ import { List } from 'react-native-paper';
 import SafeAreaContainer from '../../components/utilities/SafeAreaContainer-comp';
 
 import RestaurantCard from '../../components/restaurantCard/restaurantCard-comp';
+import MenuItem from '../../components/menuItem/menuItem-comp';
+
+import { menu } from '../../services/menu-mock';
 
 const RestaurantDetails = ({ route }) => {
 	const [ isBreakfastExpanded, setIsBreakfastExpanded ] = useState(false);
@@ -25,8 +28,7 @@ const RestaurantDetails = ({ route }) => {
 						expanded={isBreakfastExpanded}
 						onPress={() => setIsBreakfastExpanded(!isBreakfastExpanded)}
 					>
-						<List.Item title="Bread & Butter" />
-						<List.Item title="Omellete" />
+						{menu.breakfast.map(item => <MenuItem key={item.id} restaurant={restaurant} item={item} />)}
 					</List.Accordion>
 					<List.Accordion
 						title="Lunch"
@@ -34,9 +36,7 @@ const RestaurantDetails = ({ route }) => {
 						expanded={isLunchExpanded}
 						onPress={() => setIsLunchExpanded(!isLunchExpanded)}
 					>
-						<List.Item title="Burger w/ Fries" />
-						<List.Item title="Steak Sandwich" />
-						<List.Item title="Mushroom Soup" />
+						{menu.lunch.map(item => <MenuItem key={item.id} restaurant={restaurant} item={item} />)}
 					</List.Accordion>
 					<List.Accordion
 						title="Dinner"
@@ -44,9 +44,7 @@ const RestaurantDetails = ({ route }) => {
 						expanded={isDinnerExpanded}
 						onPress={() => setIsDinnerExpanded(!isDinnerExpanded)}
 					>
-						<List.Item title="Spaghetti Bolognese" />
-						<List.Item title="Veal Cutlet with Chicken Mushroom Rotini" />
-						<List.Item title="Steak Frites" />
+						{menu.dinner.map(item => <MenuItem key={item.id} restaurant={restaurant} item={item} />)}
 					</List.Accordion>
 					<List.Accordion
 						title="Drinks"
@@ -54,10 +52,7 @@ const RestaurantDetails = ({ route }) => {
 						expanded={isDrinksExpanded}
 						onPress={() => setIsDrinksExpanded(!isDrinksExpanded)}
 					>
-						<List.Item title="Coffee" />
-						<List.Item title="Tea" />
-						<List.Item title="Coke" />
-						<List.Item title="Mango Drink" />
+						{menu.drinks.map(item => <MenuItem key={item.id} restaurant={restaurant} item={item} />)}
 					</List.Accordion>
 				</List.Section>
 			</ScrollView>

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ScrollView, Pressable, Text } from 'react-native';
+import { ScrollView, Pressable } from 'react-native';
 
 import { FavouritesContainer } from './favouritesBar-styles';
 

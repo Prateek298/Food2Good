@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Text } from 'react-native';
 
+import { Text } from '../utilities';
 import { ItemAdderContainer, ChangeQtyBtn } from './itemAdder-styles';
 
 import { CartContext } from '../../services/checkout/cart-context';

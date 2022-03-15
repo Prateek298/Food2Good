@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text } from 'react-native';
 
+import { Text } from '../../components/utilities';
 import { EmptyCartContainer, EmptyIcon } from './checkout-styles';
 
 const EmptyCartScreen = () => (

@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { Text, TouchableRipple } from 'react-native-paper';
+import { TouchableRipple } from 'react-native-paper';
 
+import { Text } from '../../components/utilities';
 import {
 	StyledCard,
 	CardContent,

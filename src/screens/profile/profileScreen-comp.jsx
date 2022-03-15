@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { ScrollView } from 'react-native';
-import { List, Button } from 'react-native-paper';
+import { List } from 'react-native-paper';
 
 import { AddBtn } from './profileScreen-styles';
 

@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
-import { Text, List } from 'react-native-paper';
+import { List } from 'react-native-paper';
 
-import { Header, Name, SettingOptionsContainer, LogOutBtn } from './settingsScreen-styles';
+import { Text, Spacer } from '../../components/utilities';
+import { Header, SettingOptionsContainer, LogOutBtn } from './settingsScreen-styles';
 
 import { AuthContext } from '../../services/firebase/auth/auth-context';
 
@@ -11,7 +12,8 @@ const SettingsScreen = ({ navigation }) => {
 	return (
 		<>
 			<Header>
-				<Name>{user.displayName || 'User'}</Name>
+				<Text size="h5" weight="bold" font="heading">{user.displayName || 'User'}</Text>
+				<Spacer variants="mb-1" />
 				<Text>{user.email}</Text>
 			</Header>
 			<SettingOptionsContainer>

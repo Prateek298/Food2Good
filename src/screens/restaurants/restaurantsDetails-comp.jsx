@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { List } from 'react-native-paper';
 
-import SafeAreaContainer from '../../components/utilities/SafeAreaContainer-comp';
+import { SafeAreaContainer } from '../../components/utilities';
 
 import RestaurantCard from '../../components/restaurantCard/restaurantCard-comp';
 import MenuItem from '../../components/menuItem/menuItem-comp';

@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 
-import SafeAreaContainer from '../../components/utilities/SafeAreaContainer-comp';
+import { SafeAreaContainer, Text } from '../../components/utilities';
 import { Overlay, Symbol, FeedbackContainer, ConfirmButton } from './checkout-styles';
 
 import EmptyCartScreen from './emptyCartScreen-comp';
@@ -60,7 +60,7 @@ const CheckoutScreen = () => {
 							size={90}
 							success={paymentResult.success}
 						/>
-						<Text>{paymentResult.message}</Text>
+						<Text font="body">{paymentResult.message}</Text>
 						<ConfirmButton success={paymentResult.success} onPress={onPaymentStatusConfirm}>
 							OK
 						</ConfirmButton>

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Platform } from 'react-native';
 
-import { CompactContainer, ImageNative, ImageWebView, Name } from './compactRestaurantCard-styles';
+import { Text, Spacer } from '../utilities';
+import { CompactContainer, ImageNative, ImageWebView } from './compactRestaurantCard-styles';
 
 const CompactRestaurantCard = ({ restaurant, isMapCallout }) => {
 	// Android doesn't support Image in Callout, so we render a WebView
@@ -10,7 +11,10 @@ const CompactRestaurantCard = ({ restaurant, isMapCallout }) => {
 	return (
 		<CompactContainer>
 			<Image source={{ uri: restaurant.photos[0] }} />
-			<Name>{restaurant.name}</Name>
+			<Spacer variants="mt-2" />
+			<Text size="button" font="heading">
+				{restaurant.name}
+			</Text>
 		</CompactContainer>
 	);
 };

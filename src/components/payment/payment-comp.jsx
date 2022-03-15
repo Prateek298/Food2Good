@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { LiteCreditCardInput } from 'react-native-credit-card-input';
+import { TextInput } from 'react-native-paper';
 
-import { PaymentContainer, SectionHeading, NameInput, PayButton } from './payment-styles';
+import { Text, Spacer } from '../utilities';
+import { PayButton } from './payment-styles';
 
 const Payment = ({ onPay }) => {
 	const [ cardDetails, setCardDetails ] = useState(null);
@@ -15,14 +17,20 @@ const Payment = ({ onPay }) => {
 	};
 
 	return (
-		<PaymentContainer>
-			<SectionHeading>Payment</SectionHeading>
-			<NameInput label="Name" value={name} onChangeText={text => setName(text)} />
+		<Spacer variants="pl-2 pr-2 mt-2 mb-3">
+			<Spacer variants="m-2">
+				<Text size="title" weight="bold">
+					Payment
+				</Text>
+			</Spacer>
+			<Spacer variants="mt-2 mb-3">
+				<TextInput label="Name" value={name} onChangeText={text => setName(text)} />
+			</Spacer>
 			<LiteCreditCardInput onChange={handleChange} />
 			<PayButton disabled={!cardDetails || !name.length} onPress={() => onPay(cardDetails, name)}>
 				Pay
 			</PayButton>
-		</PaymentContainer>
+		</Spacer>
 	);
 };
 

@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { Avatar, Button } from 'react-native-paper';
 
-import SafeAreaContainer from '../../components/utilities/SafeAreaContainer-comp';
+import { SafeAreaContainer } from '../../components/utilities';
 
 export const EmptyCartContainer = styled(SafeAreaContainer)`
 	justify-content: center;

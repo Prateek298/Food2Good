@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Checkbox } from 'react-native-paper';
 
-import { ListContainer, ToggleFavourites, ToggleText, LoadingSpinner } from './restaurantsScreen-styles';
-import SafeAreaContainer from '../../components/utilities/SafeAreaContainer-comp';
+import { SafeAreaContainer, Text } from '../../components/utilities';
+import { ListContainer, ToggleFavourites, LoadingSpinner } from './restaurantsScreen-styles';
 
 import Search from '../../components/search/search-comp';
 import FavouritesBar from '../../components/favouritesBar/favouritesBar-comp';
@@ -24,13 +24,13 @@ const RestaurantsScreen = ({ navigation }) => {
 		[ searchTerm ]
 	);
 
-	if (isLoading) return <LoadingSpinner size="large" color="#5282BD" />;
+	if (isLoading) return <LoadingSpinner color="#5282BD" />;
 
 	return (
 		<SafeAreaContainer>
 			<Search searchTermSetter={setSearchTerm} />
 			<ToggleFavourites>
-				<ToggleText>Show Favourites</ToggleText>
+				<Text size="title">Show Favourites</Text>
 				<Checkbox
 					status={showFavourites ? 'checked' : 'unchecked'}
 					onPress={() => setShowFavourites(!showFavourites)}

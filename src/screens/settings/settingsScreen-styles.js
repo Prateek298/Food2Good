@@ -8,12 +8,6 @@ export const Header = styled.View`
 	/* background-color: lightblue; */
 `;
 
-export const Name = styled.Text`
-	font-size: ${props => props.theme.fontSizes.h5};
-	font-weight: ${props => props.theme.fontWeights.bold};
-	margin-bottom: ${props => props.theme.space[2]};
-`;
-
 export const SettingOptionsContainer = styled.View`
 	flex: 1;
 	/* background-color: lightgreen; */

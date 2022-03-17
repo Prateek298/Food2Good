@@ -23,7 +23,11 @@ const SettingsScreen = ({ navigation }) => {
 						left={props => <List.Icon {...props} icon="account-edit" />}
 						onPress={() => navigation.navigate('Account')}
 					/>
-					<List.Item title="Your Orders" left={props => <List.Icon {...props} icon="history" />} />
+					<List.Item 
+						title="Your Orders" 
+						left={props => <List.Icon {...props} icon="history" />}
+						onPress={() => navigation.navigate('Your Orders')}
+					/>
 					<List.Item
 						title="Favourites"
 						left={props => <List.Icon {...props} icon="heart" />}

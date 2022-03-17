@@ -10,11 +10,13 @@ import CartView from '../../components/cart/cart-comp';
 import PaymentView from '../../components/payment/payment-comp';
 
 import { CartContext } from '../../services/checkout/cart-context';
+import { UserSavesContext } from '../../services/userSaves/userSaves-context';
 import { cardTokenRequest, payRequest } from '../../services/checkout/checkout-service';
 
 const CheckoutScreen = () => {
 	const { cart, clearCart } = useContext(CartContext);
 	const { cartItems, restaurant, total } = cart;
+	const { addOrderToHistory } = useContext(UserSavesContext);
 	const [ isPaymentProcessing, setIsPaymentProcessing ] = useState(false);
 	const [ paymentResult, setPaymentResult ] = useState(null);
 
@@ -38,6 +40,7 @@ const CheckoutScreen = () => {
 
 	const onPaymentStatusConfirm = () => {
 		if (paymentResult.success) {
+			addOrderToHistory(cart);
 			clearCart();
 		}
 		setPaymentResult(null);

@@ -8,7 +8,10 @@ export const UserSavesContext = createContext();
 export const UserSavesContextProvider = ({ children }) => {
 	const [ favourites, setFavourites ] = useState([]);
 	const [ addresses, setAddresses ] = useState([]);
+	const [ orderHistory, setOrderHistory ] = useState([]);
 	const { user } = useContext(AuthContext);
+
+	// Favourites related functions
 
 	const addToFavourites = restaurant => setFavourites([ ...favourites, restaurant ]);
 
@@ -16,6 +19,8 @@ export const UserSavesContextProvider = ({ children }) => {
 		const filteredFavourites = favourites.filter(x => x.placeId !== restaurant.placeId);
 		setFavourites(filteredFavourites);
 	};
+
+	// Address related functions
 
 	const addAddress = address => {
 		// if it is the first address in the list, make it default
@@ -44,26 +49,47 @@ export const UserSavesContextProvider = ({ children }) => {
 		setAddresses(addresses.map(x => (x.id === address.id ? { ...x, ...address } : x)));
 	};
 
-	useEffect(() => {
-		const loadFavourites = async () => {
-			try {
-				const res = await AsyncStorage.getItem(`favourites-${user.uid}`);
-				if (res !== null) setFavourites(JSON.parse(res));
-			} catch (e) {
-				console.log('loading favourites error', e);
-			}
-		};
-		const loadAddresses = async () => {
-			try {
-				const res = await AsyncStorage.getItem(`addresses-${user.uid}`);
-				if (res !== null) setAddresses(JSON.parse(res));
-			} catch (e) {
-				console.log('loading addresses error', e);
-			}
-		};
-		loadFavourites();
-		loadAddresses();
-	}, []);
+	// Order history related functions
+
+	const addOrderToHistory = order => {
+		order.id = Date.now();
+		setOrderHistory([ ...orderHistory, order ]);
+	};
+
+	// Saving and loading
+
+	useEffect(
+		() => {
+			const loadFavourites = async () => {
+				try {
+					const res = await AsyncStorage.getItem(`favourites-${user.uid}`);
+					if (res !== null) setFavourites(JSON.parse(res));
+				} catch (e) {
+					console.log('loading favourites error', e);
+				}
+			};
+			const loadAddresses = async () => {
+				try {
+					const res = await AsyncStorage.getItem(`addresses-${user.uid}`);
+					if (res !== null) setAddresses(JSON.parse(res));
+				} catch (e) {
+					console.log('loading addresses error', e);
+				}
+			};
+			const loadOrderHistory = async () => {
+				try {
+					const res = await AsyncStorage.getItem(`orderHistory-${user.uid}`);
+					if (res !== null) setOrderHistory(JSON.parse(res));
+				} catch (e) {
+					console.log('loading order history error', e);
+				}
+			};
+			loadFavourites();
+			loadAddresses();
+			loadOrderHistory();
+		},
+		[ user ]
+	);
 
 	useEffect(
 		() => {
@@ -96,6 +122,21 @@ export const UserSavesContextProvider = ({ children }) => {
 		[ addresses ]
 	);
 
+	useEffect(
+		() => {
+			const saveOrderHistory = async () => {
+				try {
+					const jsonValue = JSON.stringify(orderHistory);
+					await AsyncStorage.setItem(`orderHistory-${user.uid}`, jsonValue);
+				} catch (e) {
+					console.log('Saving order history error', e);
+				}
+			};
+			saveOrderHistory();
+		},
+		[ orderHistory ]
+	);
+
 	return (
 		<UserSavesContext.Provider
 			value={{
@@ -106,7 +147,9 @@ export const UserSavesContextProvider = ({ children }) => {
 				addAddress,
 				removeAddress,
 				modifyAddress,
-				makeAddressDefault
+				makeAddressDefault,
+				orderHistory,
+				addOrderToHistory
 			}}
 		>
 			{children}

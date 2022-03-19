@@ -3,9 +3,13 @@ import {
 	getAuth,
 	onAuthStateChanged,
 	createUserWithEmailAndPassword,
+	sendEmailVerification,
 	signInWithEmailAndPassword,
 	signOut,
-	updateProfile
+	updateProfile,
+	EmailAuthProvider,
+	reauthenticateWithCredential,
+	deleteUser
 } from 'firebase/auth';
 
 import { app } from '../config';
@@ -51,6 +55,9 @@ export const AuthContextProvider = ({ children }) => {
 		}
 	};
 
+	const verifyEmail = () =>
+		sendEmailVerification(user).then(() => console.log('Email sent')).catch(e => console.log(e));
+
 	const onLogin = async (email, password) => {
 		try {
 			setIsLoading(true);
@@ -87,6 +94,35 @@ export const AuthContextProvider = ({ children }) => {
 		}
 	};
 
+	const deleteUserAccount = async password => {
+		try {
+			setIsLoading(true);
+			// Re-authenticate as firebase allows only recently login users to delete their account
+			const credential = EmailAuthProvider.credential(user.email, password);
+			await reauthenticateWithCredential(user, credential);
+			// Deleting user's account
+			await deleteUser(user);
+			setIsLoading(false);
+			setUser(null);
+		} catch (e) {
+			console.log(e);
+			setError(e);
+			setIsLoading(false);
+		}
+	};
+
+	const reloadUserData = async () => {
+		try {
+			setIsLoading(true);
+			await user.reload();
+			setIsLoading(false);
+		} catch (e) {
+			console.log(e);
+			setError(e);
+			setIsLoading(false);
+		}
+	};
+
 	return (
 		<AuthContext.Provider
 			value={{
@@ -98,7 +134,10 @@ export const AuthContextProvider = ({ children }) => {
 				onLogin,
 				onSignOut,
 				onUpdateProfile,
-				removeError
+				removeError,
+				verifyEmail,
+				deleteUserAccount,
+				reloadUserData
 			}}
 		>
 			{children}

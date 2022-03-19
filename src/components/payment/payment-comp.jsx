@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { LiteCreditCardInput } from 'react-native-credit-card-input';
 import { TextInput } from 'react-native-paper';
 
 import { Text, Spacer } from '../utilities';
 import { PayButton } from './payment-styles';
 
+import VerifyEmail from '../verifyEmail/verifyEmail-comp';
+
+import { AuthContext } from '../../services/firebase/auth/auth-context';
+
 const Payment = ({ onPay }) => {
 	const [ cardDetails, setCardDetails ] = useState(null);
 	const [ name, setName ] = useState('');
+	const { user: { emailVerified } } = useContext(AuthContext);
 
 	const handleChange = formData => {
 		const { values, status } = formData;
@@ -27,7 +32,11 @@ const Payment = ({ onPay }) => {
 				<TextInput label="Name" value={name} onChangeText={text => setName(text)} />
 			</Spacer>
 			<LiteCreditCardInput onChange={handleChange} />
-			<PayButton disabled={!cardDetails || !name.length} onPress={() => onPay(cardDetails, name)}>
+			<VerifyEmail screen="checkout" />
+			<PayButton
+				disabled={!cardDetails || !name.length || !emailVerified}
+				onPress={() => onPay(cardDetails, name)}
+			>
 				Pay
 			</PayButton>
 		</Spacer>

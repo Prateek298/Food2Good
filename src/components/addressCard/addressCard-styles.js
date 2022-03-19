@@ -1,11 +1,10 @@
 import styled from 'styled-components/native';
 import { Card, IconButton } from 'react-native-paper';
 
-export const StyledCard = styled(Card)`
+export const StyledCard = styled(Card).attrs({ elevation: 0 })`
     width: 95%;
     margin: 0 auto ${props => props.theme.space[2]};
     ${props => (props.isDefault ? 'border: 5px solid blue' : '')};
-	z-index: -1;
 `;
 
 export const CardContent = styled(Card.Content)`

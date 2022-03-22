@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Checkbox } from 'react-native-paper';
 
-import { SafeAreaContainer, Text } from '../../components/utilities';
-import { ListContainer, ToggleFavourites, LoadingSpinner } from './restaurantsScreen-styles';
+import { SafeAreaContainer, Text, LoadingSpinner } from '../../components/utilities';
+import { ListContainer, ToggleFavourites } from './restaurantsScreen-styles';
 
 import Search from '../../components/search/search-comp';
 import FavouritesBar from '../../components/favouritesBar/favouritesBar-comp';
@@ -24,7 +24,7 @@ const RestaurantsScreen = ({ navigation }) => {
 		[ searchTerm ]
 	);
 
-	if (isLoading) return <LoadingSpinner color="#5282BD" />;
+	if (isLoading) return <LoadingSpinner size={70} yPos="center" />;
 
 	return (
 		<SafeAreaContainer>

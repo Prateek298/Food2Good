@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { List } from 'react-native-paper';
 
-import { Text, Spacer } from '../../components/utilities';
+import { Text, Spacer, LoadingSpinner } from '../../components/utilities';
 import { Header, SettingOptionsContainer, LogOutBtn } from './settingsScreen-styles';
 
 import VerifyEmail from '../../components/verifyEmail/verifyEmail-comp';
@@ -9,7 +9,9 @@ import VerifyEmail from '../../components/verifyEmail/verifyEmail-comp';
 import { AuthContext } from '../../services/firebase/auth/auth-context';
 
 const SettingsScreen = ({ navigation }) => {
-	const { user, onSignOut } = useContext(AuthContext);
+	const { user, onSignOut, isLoading } = useContext(AuthContext);
+
+	if (isLoading) return <LoadingSpinner size={70} yPos="40" />
 
 	return (
 		<>

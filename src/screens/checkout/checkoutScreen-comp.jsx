@@ -1,11 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { ScrollView } from 'react-native';
-import { ActivityIndicator } from 'react-native-paper';
+import { Portal, Provider, ActivityIndicator } from 'react-native-paper';
 
-import { SafeAreaContainer, Text } from '../../components/utilities';
-import { Overlay, Symbol, FeedbackContainer, ConfirmButton } from './checkout-styles';
+import { SafeAreaContainer, ContentCenterContainer, Text, SymbolIcon, Spacer } from '../../components/utilities';
+import { ProcessingDialog, PaymentFeedbackDialog, ConfirmButton } from './checkout-styles';
 
-import EmptyCartScreen from './emptyCartScreen-comp';
 import CartView from '../../components/cart/cart-comp';
 import PaymentView from '../../components/payment/payment-comp';
 
@@ -18,7 +17,7 @@ const CheckoutScreen = () => {
 	const { cartItems, restaurant, total } = cart;
 	const { addOrderToHistory } = useContext(UserSavesContext);
 	const [ isPaymentProcessing, setIsPaymentProcessing ] = useState(false);
-	const [ paymentResult, setPaymentResult ] = useState(null);
+	const [ paymentResult, setPaymentResult ] = useState(false);
 
 	const makePayment = async (cardDetails, name) => {
 		try {
@@ -46,35 +45,43 @@ const CheckoutScreen = () => {
 		setPaymentResult(null);
 	};
 
-	if (!cartItems.length || !restaurant) return <EmptyCartScreen />;
+	if (!cartItems.length || !restaurant)
+		return (
+			<ContentCenterContainer>
+				<Text>Fill the cart with your favourites</Text>
+				<Spacer variants="mt-2 mb-2">
+					<SymbolIcon icon="cart-off" size={128} />
+				</Spacer>
+				<Text>Let us handle the delivering</Text>
+			</ContentCenterContainer>
+		);
 
 	return (
-		<SafeAreaContainer>
-			{isPaymentProcessing && (
-				<Overlay>
-					<ActivityIndicator size={100} />
-				</Overlay>
-			)}
-			{paymentResult && (
-				<Overlay>
-					<FeedbackContainer>
-						<Symbol
+		<Provider>
+			<SafeAreaContainer>
+				<ScrollView>
+					<CartView cart={cart} clearCart={clearCart} />
+					<PaymentView onPay={makePayment} />
+				</ScrollView>
+				<Portal>
+					<ProcessingDialog visible={isPaymentProcessing} dismissable={false}>
+						<ActivityIndicator size={100} />
+					</ProcessingDialog>
+
+					<PaymentFeedbackDialog visible={paymentResult} dismissable={false}>
+						<SymbolIcon
 							icon={paymentResult.success ? 'check-decagram' : 'alert-octagon'}
 							size={90}
-							success={paymentResult.success}
+							bg={paymentResult.success ? 'success' : 'error'}
 						/>
 						<Text font="body">{paymentResult.message}</Text>
 						<ConfirmButton success={paymentResult.success} onPress={onPaymentStatusConfirm}>
 							OK
 						</ConfirmButton>
-					</FeedbackContainer>
-				</Overlay>
-			)}
-			<ScrollView>
-				<CartView cart={cart} clearCart={clearCart} />
-				<PaymentView onPay={makePayment} />
-			</ScrollView>
-		</SafeAreaContainer>
+					</PaymentFeedbackDialog>
+				</Portal>
+			</SafeAreaContainer>
+		</Provider>
 	);
 };
 

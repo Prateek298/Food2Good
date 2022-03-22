@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { ActivityIndicator } from 'react-native';
 
-import { BackgroundCover, ContentContainer, StyledTextInput, StyledButton, ErrorText } from './accountScreen-styles';
+import { BackgroundCover, ContentContainer, StyledTextInput, StyledButton } from './accountScreen-styles';
 
 import { AuthContext } from '../../services/firebase/auth/auth-context';
 
@@ -9,9 +9,7 @@ const RegisterScreen = () => {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const [ confirmPassword, setConfirmPassword ] = useState('');
-	const { onRegister, isLoading, error, removeError } = useContext(AuthContext);
-
-	useEffect(removeError, []);
+	const { onRegister, isLoading } = useContext(AuthContext);
 
 	return (
 		<BackgroundCover>
@@ -43,7 +41,6 @@ const RegisterScreen = () => {
 					autoCapitalize="none"
 					secureTextEntry
 				/>
-				{error && <ErrorText>{error}</ErrorText>}
 				{isLoading ? (
 					<ActivityIndicator size="small" color="purple" />
 				) : (

@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { ScrollView } from 'react-native';
 import { List, Provider, Portal, Dialog, Button } from 'react-native-paper';
 
-import { Text, Spacer } from '../../components/utilities';
+import { Text, Spacer, LoadingSpinner } from '../../components/utilities';
 import { AddBtn, DeleteBtn, PasswordInput } from './profileScreen-styles';
 
 import PropertyEditor from '../../components/propertyEditor/propertyEditor-comp';
@@ -12,7 +12,7 @@ import { AuthContext } from '../../services/firebase/auth/auth-context';
 import { UserSavesContext } from '../../services/userSaves/userSaves-context';
 
 const ProfileScreen = ({ navigation }) => {
-	const { user, onUpdateProfile, deleteUserAccount } = useContext(AuthContext);
+	const { user, onUpdateProfile, deleteUserAccount, isLoading } = useContext(AuthContext);
 	const { addresses } = useContext(UserSavesContext);
 	const [ name, setName ] = useState(user.displayName);
 	const [ phone, setPhone ] = useState(user.phoneNumber);
@@ -20,6 +20,8 @@ const ProfileScreen = ({ navigation }) => {
 	const [ password, setPassword ] = useState('');
 
 	useEffect(() => onUpdateProfile({ displayName: name }), [ name ]);
+
+	if (isLoading) return <LoadingSpinner size={70} yPos="40" />;
 
 	return (
 		<Provider>
@@ -37,7 +39,7 @@ const ProfileScreen = ({ navigation }) => {
 				</List.Section>
 				<DeleteBtn onPress={() => setShowDeletePrompt(true)}>Delete Account</DeleteBtn>
 				<Portal>
-					<Dialog visible={showDeletePrompt} dismissable onDismiss={() => setShowDeletePrompt(false)}>
+					<Dialog visible={showDeletePrompt} onDismiss={() => setShowDeletePrompt(false)}>
 						<Dialog.Title>Confirm Delete ?</Dialog.Title>
 						<Dialog.Content>
 							<Text>Enter your password to continue</Text>

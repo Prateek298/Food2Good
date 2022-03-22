@@ -50,13 +50,6 @@ export const StyledTextInput = styled(TextInput)`
 	margin-bottom: ${props => (props.mb ? props.theme.space[3] : 0)};
 `;
 
-export const ErrorText = styled.Text`
-	color: ${props => props.theme.colors.text.error};
-	font-size: ${props => props.theme.fontSizes.body};
-	margin-bottom: ${props => props.theme.space[3]};
-	text-align: center;
-`;
-
 export const AnimationContainer = styled.View`
 	width: 100%;
 	height: 40%;

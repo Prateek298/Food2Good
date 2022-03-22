@@ -1,4 +1,5 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
+import { Alert } from 'react-native';
 import {
 	getAuth,
 	onAuthStateChanged,
@@ -36,27 +37,44 @@ export const AuthContextProvider = ({ children }) => {
 		}
 	});
 
-	// required to remove error messages from being shown after they have been displayed one time
-	const removeError = () => setError(null);
+	useEffect(
+		() => {
+			if (!error) return;
+
+			const createErrorAlert = () => {
+				const errorMsg = formatErrorMsg(error);
+				return Alert.alert('Error !', `${errorMsg}`, [ { text: 'OK', onPress: () => setError(null) } ]);
+			};
+			createErrorAlert();
+		},
+		[ error ]
+	);
 
 	const onRegister = async (email, password, confirmPassword) => {
 		try {
 			if (password !== confirmPassword) {
-				setError('Error: Passwords do not match !');
+				setError('Passwords do not match !');
 				return;
 			}
 			setIsLoading(true);
 			await createUserWithEmailAndPassword(auth, email, password);
 			setIsLoading(false);
 		} catch (e) {
-			console.log('Registration error', e);
-			setError(`Error: ${formatErrorMsg(e)}`);
+			setError(e);
 			setIsLoading(false);
 		}
 	};
 
-	const verifyEmail = () =>
-		sendEmailVerification(user).then(() => console.log('Email sent')).catch(e => console.log(e));
+	const verifyEmail = async () => {
+		try {
+			setIsLoading(true);
+			await sendEmailVerification(user);
+			setIsLoading(false);
+		} catch (e) {
+			setError(e);
+			setIsLoading(false);
+		}
+	};
 
 	const onLogin = async (email, password) => {
 		try {
@@ -64,8 +82,7 @@ export const AuthContextProvider = ({ children }) => {
 			await signInWithEmailAndPassword(auth, email, password);
 			setIsLoading(false);
 		} catch (e) {
-			console.log('Sign in error', e);
-			setError(`Error: ${formatErrorMsg(e)}`);
+			setError(e);
 			setIsLoading(false);
 		}
 	};
@@ -76,7 +93,6 @@ export const AuthContextProvider = ({ children }) => {
 			await updateProfile(auth.currentUser, { ...profileInfo });
 			setIsLoading(false);
 		} catch (e) {
-			console.log('Profile update error', e);
 			setError(e);
 			setIsLoading(false);
 		}
@@ -89,7 +105,7 @@ export const AuthContextProvider = ({ children }) => {
 			setUser(null);
 			setIsLoading(false);
 		} catch (e) {
-			setError(e.toString());
+			setError(e);
 			setIsLoading(false);
 		}
 	};
@@ -105,7 +121,6 @@ export const AuthContextProvider = ({ children }) => {
 			setIsLoading(false);
 			setUser(null);
 		} catch (e) {
-			console.log(e);
 			setError(e);
 			setIsLoading(false);
 		}
@@ -117,7 +132,6 @@ export const AuthContextProvider = ({ children }) => {
 			await user.reload();
 			setIsLoading(false);
 		} catch (e) {
-			console.log(e);
 			setError(e);
 			setIsLoading(false);
 		}
@@ -134,7 +148,6 @@ export const AuthContextProvider = ({ children }) => {
 				onLogin,
 				onSignOut,
 				onUpdateProfile,
-				removeError,
 				verifyEmail,
 				deleteUserAccount,
 				reloadUserData

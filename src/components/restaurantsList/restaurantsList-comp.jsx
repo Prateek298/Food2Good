@@ -11,7 +11,7 @@ const RestaurantsList = ({ restaurants, error, onNavigate }) => {
 	if (error)
 		return (
 			<ErrorContainer>
-				<ErrorIcon />
+				<ErrorIcon icon="map-marker-off" size={128} />
 				<Text weight="bold" color="error" font="body" size="title">
 					{error}
 				</Text>

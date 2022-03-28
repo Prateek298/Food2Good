@@ -24,11 +24,6 @@ export const FormContainer = styled.View`
 	padding: ${props => props.theme.space[3]};
 `;
 
-export const AddressInput = styled(TextInput).attrs({ mode: 'outlined' })`
-    font-size: ${props => props.theme.fontSizes.body};
-    margin-bottom: ${props => props.theme.space[2]};
-`;
-
 export const SubmitBtn = styled(Button).attrs({ mode: 'contained' })`
     width: 80px;
     margin: ${props => props.theme.space[2]} auto 0;

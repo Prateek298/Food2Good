@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { Button, TextInput } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 
 const AccountBackground = styled.ImageBackground.attrs({
 	source: require('../../../assets/home_bg.jpg')
@@ -42,11 +42,6 @@ export const ContentContainer = styled.View`
 
 export const StyledButton = styled(Button)`
 	padding: ${props => props.theme.space[2]};
-	margin-bottom: ${props => (props.mb ? props.theme.space[3] : 0)};
-`;
-
-export const StyledTextInput = styled(TextInput)`
-	width: 100%;
 	margin-bottom: ${props => (props.mb ? props.theme.space[3] : 0)};
 `;
 

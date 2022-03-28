@@ -31,11 +31,14 @@ export const AuthContextProvider = ({ children }) => {
 	const [ isLoading, setIsLoading ] = useState(false);
 	const [ error, setError ] = useState(null);
 
-	onAuthStateChanged(auth, userAuth => {
-		if (userAuth) {
-			setUser(userAuth);
-		}
-	});
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, userAuth => {
+			if (userAuth) {
+				setUser(userAuth);
+			}
+		});
+		return unsubscribe;
+	}, []);
 
 	useEffect(
 		() => {

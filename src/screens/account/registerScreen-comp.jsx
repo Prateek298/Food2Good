@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, Keyboard } from 'react-native';
 
 import { BackgroundCover, ContentContainer, StyledButton } from './accountScreen-styles';
 import { Spacer } from '../../components/utilities';
@@ -24,6 +24,7 @@ const RegisterScreen = () => {
 	const changeStatus = field => newStatus => setInputFieldsStatus({ ...inputFieldsStatus, [field]: newStatus });
 
 	const handleSubmit = () => {
+		Keyboard.dismiss();
 		// check whether all the field that need to be validated are ok or not
 		if (!Object.keys(inputFieldsStatus).includes(false)) {
 			onRegister(email, password, confirmPassword);

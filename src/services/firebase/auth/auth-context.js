@@ -8,6 +8,7 @@ import {
 	signInWithEmailAndPassword,
 	signOut,
 	updateProfile,
+	sendPasswordResetEmail,
 	EmailAuthProvider,
 	reauthenticateWithCredential,
 	deleteUser
@@ -53,92 +54,48 @@ export const AuthContextProvider = ({ children }) => {
 		[ error ]
 	);
 
-	const onRegister = async (email, password, confirmPassword) => {
-		try {
+	// wraps async functions to provide a common handling (refactors code)
+	const handleAsync = func => {
+		setIsLoading(true);
+		func().catch(e => setError(e)).finally(() => setIsLoading(false));
+	};
+
+	const onRegister = (email, password, confirmPassword) =>
+		handleAsync(async () => {
 			if (password !== confirmPassword) {
 				setError('Passwords do not match !');
 				return;
 			}
-			setIsLoading(true);
 			await createUserWithEmailAndPassword(auth, email, password);
-			setIsLoading(false);
-		} catch (e) {
-			setError(e);
-			setIsLoading(false);
-		}
-	};
+		});
 
-	const verifyEmail = async () => {
-		try {
-			setIsLoading(true);
-			await sendEmailVerification(user);
-			setIsLoading(false);
-		} catch (e) {
-			setError(e);
-			setIsLoading(false);
-		}
-	};
+	const verifyEmail = () => handleAsync(async () => await sendEmailVerification(user));
 
-	const onLogin = async (email, password) => {
-		try {
-			setIsLoading(true);
-			await signInWithEmailAndPassword(auth, email, password);
-			setIsLoading(false);
-		} catch (e) {
-			setError(e);
-			setIsLoading(false);
-		}
-	};
+	const onLogin = (email, password) =>
+		handleAsync(async () => await signInWithEmailAndPassword(auth, email, password));
 
-	const onUpdateProfile = async profileInfo => {
-		try {
-			setIsLoading(true);
-			await updateProfile(auth.currentUser, { ...profileInfo });
-			setIsLoading(false);
-		} catch (e) {
-			setError(e);
-			setIsLoading(false);
-		}
-	};
+	const onUpdateProfile = profileInfo =>
+		handleAsync(async () => await updateProfile(auth.currentUser, { ...profileInfo }));
 
-	const onSignOut = async () => {
-		try {
-			setIsLoading(true);
+	const onForgetPassword = email => handleAsync(async () => await sendPasswordResetEmail(auth, email));
+
+	const onSignOut = () =>
+		handleAsync(async () => {
 			await signOut(auth);
 			setUser(null);
-			setIsLoading(false);
-		} catch (e) {
-			setError(e);
-			setIsLoading(false);
-		}
-	};
+		});
 
-	const deleteUserAccount = async password => {
-		try {
-			setIsLoading(true);
+	const deleteUserAccount = password =>
+		handleAsync(async () => {
 			// Re-authenticate as firebase allows only recently login users to delete their account
 			const credential = EmailAuthProvider.credential(user.email, password);
 			await reauthenticateWithCredential(user, credential);
 			// Deleting user's account
 			await deleteUser(user);
-			setIsLoading(false);
 			setUser(null);
-		} catch (e) {
-			setError(e);
-			setIsLoading(false);
-		}
-	};
+		});
 
-	const reloadUserData = async () => {
-		try {
-			setIsLoading(true);
-			await user.reload();
-			setIsLoading(false);
-		} catch (e) {
-			setError(e);
-			setIsLoading(false);
-		}
-	};
+	const reloadUserData = () => handleAsync(async () => await user.reload());
 
 	return (
 		<AuthContext.Provider
@@ -151,6 +108,7 @@ export const AuthContextProvider = ({ children }) => {
 				onLogin,
 				onSignOut,
 				onUpdateProfile,
+				onForgetPassword,
 				verifyEmail,
 				deleteUserAccount,
 				reloadUserData

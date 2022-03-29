@@ -9,4 +9,4 @@ const firebaseConfig = {
 	appId: '1:1007588340115:web:36c069b7eebbc27912b866'
 };
 
-export const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig, 'Food 2 Good');

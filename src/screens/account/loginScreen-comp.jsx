@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, Alert, Keyboard } from 'react-native';
 
 import { BackgroundCover, ContentContainer, StyledButton } from './accountScreen-styles';
-import { Spacer } from '../../components/utilities';
+import { Spacer, Text } from '../../components/utilities';
 
 import TextInputWithFeedback from '../../components/textInputWithFeedback/textInputWithFeedback-comp';
 
@@ -17,11 +17,25 @@ const LoginScreen = () => {
 		email: false,
 		password: false
 	});
-	const { onLogin, isLoading } = useContext(AuthContext);
+	const { onLogin, onForgetPassword, isLoading } = useContext(AuthContext);
 
 	const changeStatus = field => newStatus => setInputFieldsStatus({ ...inputFieldsStatus, [field]: newStatus });
 
+	const handleForget = async () => {
+		try {
+			if (!inputFieldsStatus['email']) return;
+
+			await onForgetPassword(email);
+			return Alert.alert('Mail Sent', `Check the mail sent to ${email} to reset your password`, [
+				{ text: 'OK' }
+			]);
+		} catch (e) {
+			console.log(e);
+		}
+	};
+
 	const handleSubmit = () => {
+		Keyboard.dismiss();
 		// check whether all the field that need to be validated are ok or not
 		if (Object.values(inputFieldsStatus).includes(false)) return;
 		onLogin(email, password);
@@ -49,6 +63,10 @@ const LoginScreen = () => {
 					autoCapitalize="none"
 					secureTextEntry
 				/>
+				<Spacer variants="mb-1" />
+				<Text size="button" color={inputFieldsStatus['email'] ? 'blue' : 'disabled'} onPress={handleForget}>
+					Forgot Password ? {!inputFieldsStatus['email'] && '(Enter email first)'}
+				</Text>
 				<Spacer variants="mb-3" />
 				{isLoading ? (
 					<ActivityIndicator size="small" color="purple" />

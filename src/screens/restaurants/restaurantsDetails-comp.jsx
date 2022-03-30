@@ -4,8 +4,7 @@ import { List } from 'react-native-paper';
 
 import { SafeAreaContainer } from '../../components/utilities';
 
-import RestaurantCard from '../../components/restaurantCard/restaurantCard-comp';
-import MenuItem from '../../components/menuItem/menuItem-comp';
+import { RestaurantCard, MenuItem } from '../../components/restaurants';
 
 import { menu } from '../../services/menu-mock';
 

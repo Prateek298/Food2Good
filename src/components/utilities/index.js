@@ -4,4 +4,18 @@ import Spacer from './spacer';
 import SymbolIcon from './symbolIcon';
 import LoadingSpinner from './loadingSpinner';
 
-export { SafeAreaContainer, ContentCenterContainer, Text, Spacer, SymbolIcon, LoadingSpinner };
+import DropdownInput from './dropdownInput/dropdownInput-comp';
+import TextInputWithFeedback from './textInputWithFeedback/textInputWithFeedback-comp';
+import PropertyEditor from './propertyEditor/propertyEditor-comp';
+
+export {
+	SafeAreaContainer,
+	ContentCenterContainer,
+	Text,
+	Spacer,
+	SymbolIcon,
+	LoadingSpinner,
+	DropdownInput,
+	TextInputWithFeedback,
+	PropertyEditor
+};

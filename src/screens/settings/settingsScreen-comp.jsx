@@ -1,20 +1,20 @@
-import React, { useContext } from 'react';
+import React, { useContext, Fragment } from 'react';
 import { List } from 'react-native-paper';
 
 import { Text, Spacer, LoadingSpinner } from '../../components/utilities';
 import { Header, SettingOptionsContainer, LogOutBtn } from './settingsScreen-styles';
 
-import VerifyEmail from '../../components/verifyEmail/verifyEmail-comp';
+import VerifyEmail from '../../components/functionalities/verifyEmail/verifyEmail-comp';
 
 import { AuthContext } from '../../services/firebase/auth/auth-context';
 
 const SettingsScreen = ({ navigation }) => {
 	const { user, onSignOut, isLoading } = useContext(AuthContext);
 
-	if (isLoading) return <LoadingSpinner size={70} yPos="40" />
+	if (isLoading) return <LoadingSpinner size={70} yPos="40" />;
 
 	return (
-		<>
+		<Fragment>
 			<Header>
 				<Text size="h5" weight="bold" font="heading">
 					{user.displayName || 'User'}
@@ -55,7 +55,7 @@ const SettingsScreen = ({ navigation }) => {
 				</List.Section>
 				<LogOutBtn onPress={() => onSignOut()}>Log Out</LogOutBtn>
 			</SettingOptionsContainer>
-		</>
+		</Fragment>
 	);
 };
 

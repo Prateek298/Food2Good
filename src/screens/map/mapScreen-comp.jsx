@@ -4,8 +4,8 @@ import { View } from 'react-native';
 
 import { SearchContainer, Map, ErrorMsg } from './mapScreen-styles';
 
-import Search from '../../components/search/search-comp';
-import CompactRestaurantCard from '../../components/compactRestaurantCard/compactRestaurantCard-comp';
+import Search from '../../components/functionalities/search/search-comp';
+import { CompactRestaurantCard } from '../../components/restaurants';
 
 import { LocationContext } from '../../services/location/location-context';
 import { RestaurantsContext } from '../../services/restaurants/restaurants-context';

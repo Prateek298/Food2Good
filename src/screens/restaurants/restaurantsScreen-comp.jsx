@@ -4,9 +4,8 @@ import { Checkbox } from 'react-native-paper';
 import { SafeAreaContainer, Text, LoadingSpinner } from '../../components/utilities';
 import { ListContainer, ToggleFavourites } from './restaurantsScreen-styles';
 
-import Search from '../../components/search/search-comp';
-import FavouritesBar from '../../components/favouritesBar/favouritesBar-comp';
-import RestaurantsList from '../../components/restaurantsList/restaurantsList-comp';
+import Search from '../../components/functionalities/search/search-comp';
+import { FavouritesBar, RestaurantsList } from '../../components/restaurants';
 
 import { LocationContext } from '../../services/location/location-context';
 import { RestaurantsContext } from '../../services/restaurants/restaurants-context';

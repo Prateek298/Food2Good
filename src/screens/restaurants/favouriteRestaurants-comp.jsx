@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { ContentCenterContainer, Text, SymbolIcon, Spacer } from '../../components/utilities';
 import { ListContainer } from './restaurantsScreen-styles';
 
-import RestaurantsList from '../../components/restaurantsList/restaurantsList-comp';
+import { RestaurantsList } from '../../components/restaurants';
 
 import { UserSavesContext } from '../../services/userSaves/userSaves-context';
 

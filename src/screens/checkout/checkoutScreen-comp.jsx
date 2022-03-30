@@ -5,8 +5,7 @@ import { Portal, Provider, ActivityIndicator } from 'react-native-paper';
 import { SafeAreaContainer, ContentCenterContainer, Text, SymbolIcon, Spacer } from '../../components/utilities';
 import { ProcessingDialog, PaymentFeedbackDialog, ConfirmButton } from './checkout-styles';
 
-import CartView from '../../components/cart/cart-comp';
-import PaymentView from '../../components/payment/payment-comp';
+import { Cart as CartView, Payment as PaymentView } from '../../components/checkout';
 
 import { CartContext } from '../../services/checkout/cart-context';
 import { UserSavesContext } from '../../services/userSaves/userSaves-context';

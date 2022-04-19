@@ -3,7 +3,7 @@ import { Pressable } from 'react-native';
 import { Card } from 'react-native-paper';
 
 import { Spacer, Text } from '../../utilities';
-import { Dropdown, Item, RowGroup } from './historyOrder-styles';
+import { Dropdown, Item } from './historyOrder-styles';
 
 const formatDate = date => {
 	const d = new Date(date);
@@ -30,7 +30,7 @@ const HistoryOrder = ({ order, onNavigate }) => {
 		<Spacer variants="mb-2">
 			<Card>
 				<Spacer variants="p-3">
-					<Text font="heading" weight="bold" size="title">
+					<Text font="heading" size="title">
 						{restaurant.name}
 					</Text>
 					<Text size="caption" color="secondary">
@@ -43,25 +43,31 @@ const HistoryOrder = ({ order, onNavigate }) => {
 								<Item
 									key={item.id}
 									left={() => (
-										<Text size="button">
+										<Text font="body2" size="button">
 											{item.name} ({item.quantity})
 										</Text>
 									)}
-									right={() => <Text size="button">&#8377;{item.price * item.quantity}</Text>}
+									right={() => (
+										<Text font="body2" size="button">
+											&#8377;{item.price * item.quantity}
+										</Text>
+									)}
 								/>
 							))}
 						</Spacer>
 					</Dropdown>
 					<Spacer variants="mb-2" />
-					<RowGroup>
-						<Text weight="bold">Total: </Text>
-						<Text color="success" weight="bold">
+					<Text font="body" weight="bold">
+						Total:{' '}
+						<Text font="body" color="success" weight="bold">
 							&#8377;{Math.round(total * 100) / 100}
 						</Text>
-					</RowGroup>
+					</Text>
 					<Spacer variants="mt-2" />
 					<Pressable onPress={() => onNavigate('RestaurantDetails', { restaurant })}>
-						<Text color="blue">Order from here again</Text>
+						<Text font="body2" color="blue">
+							Order from here again
+						</Text>
 					</Pressable>
 				</Spacer>
 			</Card>

@@ -10,4 +10,5 @@ export const ToggleFavourites = styled.View`
 	flex-direction: row;
 	width: 40%;
 	justify-content: space-between;
+	align-items: center;
 `;

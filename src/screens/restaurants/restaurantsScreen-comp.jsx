@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Checkbox } from 'react-native-paper';
+import { Switch } from 'react-native-paper';
 
-import { SafeAreaContainer, Text, LoadingSpinner } from '../../components/utilities';
+import { SafeAreaContainer, Text, LoadingSpinner, Spacer } from '../../components/utilities';
 import { ListContainer, ToggleFavourites } from './restaurantsScreen-styles';
 
 import Search from '../../components/functionalities/search/search-comp';
@@ -29,11 +29,15 @@ const RestaurantsScreen = ({ navigation }) => {
 		<SafeAreaContainer>
 			<Search searchTermSetter={setSearchTerm} />
 			<ToggleFavourites>
-				<Text size="title">Show Favourites</Text>
-				<Checkbox
-					status={showFavourites ? 'checked' : 'unchecked'}
-					onPress={() => setShowFavourites(!showFavourites)}
+				<Switch
+					value={showFavourites}
+					onValueChange={() => setShowFavourites(!showFavourites)}
+					color="tomato"
 				/>
+				<Spacer variants="pr-1" />
+				<Text size="title" font="body2">
+					Favourites
+				</Text>
 			</ToggleFavourites>
 			<FavouritesBar hidden={!showFavourites} onNavigate={navigation.navigate} />
 			<ListContainer>

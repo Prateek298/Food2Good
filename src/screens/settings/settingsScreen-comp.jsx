@@ -3,6 +3,7 @@ import { List } from 'react-native-paper';
 
 import { Text, Spacer, LoadingSpinner } from '../../components/utilities';
 import { Header, SettingOptionsContainer, LogOutBtn } from './settingsScreen-styles';
+import { fonts, fontWeights } from '../../infrastructure/theme/fonts';
 
 import VerifyEmail from '../../components/functionalities/verifyEmail/verifyEmail-comp';
 
@@ -41,16 +42,19 @@ const SettingsScreen = ({ navigation }) => {
 						title="Account"
 						left={props => <List.Icon {...props} icon="account-edit" />}
 						onPress={() => navigation.navigate('Account')}
+						titleStyle={{ fontFamily: fonts.body2 }}
 					/>
 					<List.Item
 						title="Your Orders"
 						left={props => <List.Icon {...props} icon="history" />}
 						onPress={() => navigation.navigate('Your Orders')}
+						titleStyle={{ fontFamily: fonts.body2 }}
 					/>
 					<List.Item
 						title="Favourites"
 						left={props => <List.Icon {...props} icon="heart" />}
 						onPress={() => navigation.navigate('Favourites')}
+						titleStyle={{ fontFamily: fonts.body2 }}
 					/>
 				</List.Section>
 				<LogOutBtn onPress={() => onSignOut()}>Log Out</LogOutBtn>

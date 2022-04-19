@@ -11,12 +11,12 @@ import { CartContext } from '../../services/checkout/cart-context';
 import { UserSavesContext } from '../../services/userSaves/userSaves-context';
 import { cardTokenRequest, payRequest } from '../../services/checkout/checkout-service';
 
-const CheckoutScreen = () => {
+const CheckoutScreen = ({ navigation }) => {
 	const { cart, clearCart } = useContext(CartContext);
 	const { cartItems, restaurant, total } = cart;
 	const { addOrderToHistory } = useContext(UserSavesContext);
 	const [ isPaymentProcessing, setIsPaymentProcessing ] = useState(false);
-	const [ paymentResult, setPaymentResult ] = useState(false);
+	const [ paymentResult, setPaymentResult ] = useState(false); // null causes an issue
 
 	const makePayment = async (cardDetails, name) => {
 		try {
@@ -41,7 +41,7 @@ const CheckoutScreen = () => {
 			addOrderToHistory(cart);
 			clearCart();
 		}
-		setPaymentResult(null);
+		setPaymentResult(false);
 	};
 
 	if (!cartItems.length || !restaurant)
@@ -59,7 +59,7 @@ const CheckoutScreen = () => {
 		<Provider>
 			<SafeAreaContainer>
 				<ScrollView>
-					<CartView cart={cart} clearCart={clearCart} />
+					<CartView cart={cart} clearCart={clearCart} onNavigate={navigation.navigate} />
 					<PaymentView onPay={makePayment} />
 				</ScrollView>
 				<Portal>

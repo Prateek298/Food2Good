@@ -1,12 +1,12 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, Pressable } from 'react-native';
 
 import { Text, Spacer } from '../../utilities';
 import { CartContainer, ClearButton } from './cart-styles';
 
 import { RestaurantCard, MenuItem } from '../../restaurants';
 
-const Cart = ({ cart, clearCart }) => {
+const Cart = ({ cart, clearCart, onNavigate }) => {
 	const { restaurant, cartItems, total } = cart;
 
 	return (
@@ -16,7 +16,9 @@ const Cart = ({ cart, clearCart }) => {
 					Your Order
 				</Text>
 			</Spacer>
-			<RestaurantCard restaurant={restaurant} />
+			<Pressable onPress={() => onNavigate('RestaurantDetails', { restaurant })}>
+				<RestaurantCard restaurant={restaurant} />
+			</Pressable>
 			<ScrollView nestedScrollEnabled>
 				{cartItems.map(cartItem => <MenuItem key={cartItem.id} restaurant={restaurant} item={cartItem} />)}
 			</ScrollView>

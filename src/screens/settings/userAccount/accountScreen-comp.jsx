@@ -36,7 +36,9 @@ const AccountScreen = ({ navigation }) => {
 					))}
 					<AddBtn onPress={() => navigation.navigate('Add Address', { address: {} })}>Add More</AddBtn>
 				</List.Section>
-				<DeleteBtn onPress={() => setShowDeletePrompt(true)}>Delete Account</DeleteBtn>
+				<Spacer variants="mt-4 mb-2">
+					<DeleteBtn onPress={() => setShowDeletePrompt(true)}>Delete Account</DeleteBtn>
+				</Spacer>
 				<Portal>
 					<Dialog visible={showDeletePrompt} onDismiss={() => setShowDeletePrompt(false)}>
 						<Dialog.Title>Confirm Delete ?</Dialog.Title>
